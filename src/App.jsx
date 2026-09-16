@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
+import { TrustCoreProvider } from './context/TrustCoreContext'
 import Layout from './components/Layout'
 
 // Public pages
@@ -84,7 +85,9 @@ export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <AppRoutes />
+        <TrustCoreProvider>
+          <AppRoutes />
+        </TrustCoreProvider>
       </AuthProvider>
     </BrowserRouter>
   )

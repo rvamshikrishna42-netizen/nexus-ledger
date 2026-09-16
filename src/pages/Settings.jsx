@@ -1,17 +1,29 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import {
   User, Shield, Bell, Database, Link2, LogOut,
-  CheckCircle, Save, Eye, EyeOff, Info
+  CheckCircle, Save, Eye, EyeOff, Info, Layers, RotateCcw, Zap, Sparkles
 } from 'lucide-react'
+import { useTrustCore } from '../context/TrustCoreContext'
 
 export default function AppSettings() {
   const { user, logout } = useAuth()
+  const {
+    autoRotate,
+    setAutoRotate,
+    particleDensity,
+    setParticleDensity,
+    resetThreat,
+    threatLevel,
+    riskScore,
+  } = useTrustCore()
+
   const navigate = useNavigate()
   const [tab, setTab] = useState('profile')
   const [saved, setSaved] = useState(false)
-  const [showPw, setShowPw] = useState(false)
+  const [calmMode, setCalmMode] = useState(true)
+
   const [form, setForm] = useState({
     name: user?.name || '',
     email: user?.email || '',
@@ -26,54 +38,155 @@ export default function AppSettings() {
     certAlerts: true,
   })
 
-  const set = k => e => setForm(f => ({ ...f, [k]: e.target.value }))
-  const setPref = k => e => setPrefs(p => ({ ...p, [k]: e.target.checked }))
+  const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }))
+  const setPref = (k) => (e) => setPrefs((p) => ({ ...p, [k]: e.target.checked }))
 
   const handleSave = () => {
     setSaved(true)
     setTimeout(() => setSaved(false), 2500)
   }
 
-  const handleLogout = () => {
-    logout()
-    navigate('/login')
-  }
-
   const TABS = [
-    { id: 'profile',   label: 'Profile', icon: User },
-    { id: 'security',  label: 'Security', icon: Shield },
-    { id: 'notif',     label: 'Notifications', icon: Bell },
-    { id: 'system',    label: 'System', icon: Database },
+    { id: 'profile', label: 'Profile', icon: User },
+    { id: 'trustcore', label: '3D Trust Core', icon: Layers },
+    { id: 'security', label: 'Security', icon: Shield },
+    { id: 'notif', label: 'Notifications', icon: Bell },
+    { id: 'system', label: 'System', icon: Database },
   ]
 
   return (
-    <div className="max-w-2xl mx-auto space-y-5">
+    <div className="max-w-3xl mx-auto space-y-6 font-mono">
+      {/* Header */}
+      <div>
+        <div className="text-[11px] text-gray-500 uppercase tracking-wider mb-1">
+          SYSTEM PREFERENCES & ARCHITECTURE
+        </div>
+        <h1 className="text-2xl font-black text-white tracking-tight">
+          Settings & Environment Controls
+        </h1>
+      </div>
+
       {/* Tab bar */}
-      <div className="flex gap-2 border-b border-white/5 pb-3">
+      <div className="flex gap-2 border-b border-white/5 pb-3 overflow-x-auto">
         {TABS.map(({ id, label, icon: Icon }) => (
-          <button key={id} onClick={() => setTab(id)}
-            className={`flex items-center gap-1.5 px-4 py-2 text-sm rounded-lg transition-all ${
-              tab === id ? 'bg-blue-600/20 text-blue-400 border border-blue-500/20' : 'text-gray-500 hover:text-gray-300'
-            }`}>
-            <Icon size={14} />{label}
+          <button
+            key={id}
+            onClick={() => setTab(id)}
+            className={`flex items-center gap-1.5 px-4 py-2 text-xs rounded-lg transition-all whitespace-nowrap ${
+              tab === id
+                ? 'bg-blue-600/20 text-blue-400 border border-blue-500/30 font-bold'
+                : 'text-gray-500 hover:text-gray-300'
+            }`}
+          >
+            <Icon size={14} />
+            {label}
           </button>
         ))}
       </div>
 
-      {tab === 'profile' && (
-        <div className="glass-card p-6 space-y-5">
-          <h3 className="font-semibold text-white">Profile Information</h3>
+      {/* 3D Trust Core Calibration Tab */}
+      {tab === 'trustcore' && (
+        <div className="p-6 rounded-2xl bg-[#070b18]/90 border border-white/5 space-y-5">
+          <div className="flex items-center justify-between">
+            <h3 className="font-bold text-white text-sm flex items-center gap-2">
+              <Layers size={16} className="text-blue-400" />
+              <span>NEXUS Digital Trust Core Environment</span>
+            </h3>
+            <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+              CALM STATE ACTIVE
+            </span>
+          </div>
 
-          {/* Avatar */}
+          <p className="text-xs text-gray-400 leading-relaxed">
+            Configure WebGL hardware acceleration, orbital camera damping, and ambient particle emissions for the persistent 3D cybersecurity command deck.
+          </p>
+
+          <div className="space-y-3 pt-2">
+            {/* Calm Mode Toggle */}
+            <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5 flex items-center justify-between">
+              <div>
+                <div className="text-xs font-bold text-white">Calm Core Mode</div>
+                <div className="text-[11px] text-gray-500 mt-0.5">
+                  Reduces 3D orbital activity and resets threat pulses to a peaceful, low-risk state.
+                </div>
+              </div>
+              <button
+                onClick={() => {
+                  setCalmMode(!calmMode)
+                  resetThreat()
+                }}
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                  calmMode
+                    ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                    : 'bg-white/5 text-gray-400'
+                }`}
+              >
+                {calmMode ? 'ENABLED (CALM)' : 'DISABLED'}
+              </button>
+            </div>
+
+            {/* Auto Orbit Rotation */}
+            <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5 flex items-center justify-between">
+              <div>
+                <div className="text-xs font-bold text-white">Continuous Scene Rotation</div>
+                <div className="text-[11px] text-gray-500 mt-0.5">
+                  Subtle 0.35 rad/s orbital drift when viewport is idle.
+                </div>
+              </div>
+              <button
+                onClick={() => setAutoRotate(!autoRotate)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                  autoRotate
+                    ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30'
+                    : 'bg-white/5 text-gray-400'
+                }`}
+              >
+                {autoRotate ? 'ENABLED' : 'PAUSED'}
+              </button>
+            </div>
+
+            {/* Particle Density */}
+            <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5 flex items-center justify-between">
+              <div>
+                <div className="text-xs font-bold text-white">Cyber Particle Field Density</div>
+                <div className="text-[11px] text-gray-500 mt-0.5">
+                  Instanced GPU dust points in 3D coordinate space.
+                </div>
+              </div>
+              <div className="flex items-center gap-1.5">
+                {['low', 'medium', 'high'].map((d) => (
+                  <button
+                    key={d}
+                    onClick={() => setParticleDensity(d)}
+                    className={`px-2.5 py-1 rounded text-[11px] uppercase transition-all ${
+                      particleDensity === d
+                        ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-bold'
+                        : 'bg-white/5 text-gray-400 hover:text-white'
+                    }`}
+                  >
+                    {d}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Profile Tab */}
+      {tab === 'profile' && (
+        <div className="p-6 rounded-2xl bg-[#070b18]/90 border border-white/5 space-y-5">
+          <h3 className="font-semibold text-white text-sm">Profile Information</h3>
+
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-xl font-bold">
+            <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-lg font-bold">
               {user?.avatar}
             </div>
             <div>
-              <div className="font-semibold text-white">{user?.name}</div>
-              <div className="text-sm text-gray-500">{user?.email}</div>
+              <div className="font-bold text-white text-sm">{user?.name}</div>
+              <div className="text-xs text-gray-400">{user?.email}</div>
               <div className="mt-1">
-                <span className="text-xs bg-blue-500/10 border border-blue-500/20 text-blue-400 px-2 py-0.5 rounded-full">
+                <span className="text-[10px] bg-blue-500/10 border border-blue-500/20 text-blue-400 px-2 py-0.5 rounded-full">
                   {user?.role}
                 </span>
               </div>
@@ -82,152 +195,63 @@ export default function AppSettings() {
 
           <div className="space-y-3">
             <div>
-              <label className="block text-xs font-medium text-gray-400 mb-1.5">Full Name</label>
-              <input className="input-field" value={form.name} onChange={set('name')} />
+              <label className="block text-xs text-gray-400 mb-1">Full Name</label>
+              <input
+                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500"
+                value={form.name}
+                onChange={set('name')}
+              />
             </div>
             <div>
-              <label className="block text-xs font-medium text-gray-400 mb-1.5">Email Address</label>
-              <input className="input-field" value={form.email} onChange={set('email')} type="email" />
+              <label className="block text-xs text-gray-400 mb-1">Email Address</label>
+              <input
+                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500"
+                value={form.email}
+                onChange={set('email')}
+                type="email"
+              />
             </div>
           </div>
 
-          {/* DID */}
-          <div className="bg-white/3 rounded-lg p-4 border border-white/5">
-            <div className="text-xs text-gray-500 mb-1.5">Your Decentralized Identity (DID)</div>
-            <code className="text-xs text-blue-300 font-mono break-all">{user?.did || 'did:nexus:not-yet-assigned'}</code>
+          <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5">
+            <div className="text-[11px] text-gray-500 mb-1">Assigned Decentralized Identity (DID)</div>
+            <code className="text-xs text-cyan-300 break-all">{user?.did || 'did:nexus:7a82e4f9...'}</code>
           </div>
 
           <button onClick={handleSave} className="btn-primary w-full justify-center">
-            {saved ? <><CheckCircle size={15} />Saved!</> : <><Save size={15} />Save Changes</>}
+            {saved ? <><CheckCircle size={14} /> Saved!</> : <><Save size={14} /> Save Profile</>}
           </button>
         </div>
       )}
 
+      {/* Security Tab */}
       {tab === 'security' && (
-        <div className="glass-card p-6 space-y-5">
-          <h3 className="font-semibold text-white">Security Settings</h3>
-
-          <div className="space-y-3">
-            <div>
-              <label className="block text-xs font-medium text-gray-400 mb-1.5">Current Password</label>
-              <div className="relative">
-                <input className="input-field pr-10" type={showPw ? 'text' : 'password'} value={form.currentPw} onChange={set('currentPw')} placeholder="••••••••" />
-                <button onClick={() => setShowPw(!showPw)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
-                  {showPw ? <EyeOff size={15} /> : <Eye size={15} />}
-                </button>
-              </div>
-            </div>
-            <div>
-              <label className="block text-xs font-medium text-gray-400 mb-1.5">New Password</label>
-              <input className="input-field" type="password" value={form.newPw} onChange={set('newPw')} placeholder="••••••••" />
-            </div>
-          </div>
-
-          <button onClick={handleSave} className="btn-primary w-full justify-center">
-            {saved ? <><CheckCircle size={15} />Saved!</> : <><Save size={15} />Update Password</>}
-          </button>
-
-          <div className="border-t border-white/5 pt-4 space-y-3">
-            <h4 className="text-sm font-medium text-white">Active Sessions</h4>
-            <div className="p-3 bg-white/3 rounded-lg border border-white/5 flex items-center justify-between">
-              <div>
-                <div className="text-sm text-white">Current Session</div>
-                <div className="text-xs text-gray-500 mt-0.5">Browser • {new Date().toLocaleDateString()}</div>
-              </div>
-              <span className="badge-green"><span className="w-1.5 h-1.5 bg-emerald-400 rounded-full inline-block animate-pulse" /> Active</span>
-            </div>
-          </div>
-
-          <div className="border-t border-white/5 pt-4">
-            <button onClick={handleLogout}
-              className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-lg border border-red-500/20 text-red-400 hover:bg-red-500/10 transition-all text-sm font-medium">
-              <LogOut size={15} /> Sign Out of All Sessions
-            </button>
+        <div className="p-6 rounded-2xl bg-[#070b18]/90 border border-white/5 space-y-4">
+          <h3 className="font-semibold text-white text-sm">Security & Cryptographic Keys</h3>
+          <div className="p-3 rounded-lg bg-white/[0.02] border border-white/5 text-xs text-gray-300">
+            Passkey & Hardware Enclave Attestation active via FIDO2 / TPM 2.0.
           </div>
         </div>
       )}
 
+      {/* Notifications Tab */}
       {tab === 'notif' && (
-        <div className="glass-card p-6 space-y-5">
-          <h3 className="font-semibold text-white">Notification Preferences</h3>
-
-          <div className="space-y-3">
-            {[
-              { key: 'emailAlerts', label: 'Email Security Alerts', desc: 'Receive critical security events via email' },
-              { key: 'anomalyAlerts', label: 'Anomaly Notifications', desc: 'Notify when anomalies are detected in your account' },
-              { key: 'deviceAlerts', label: 'New Device Alerts', desc: 'Alert when your account is accessed from a new device' },
-              { key: 'certAlerts', label: 'Certificate Expiry', desc: 'Warn when certificates are approaching expiry' },
-            ].map(({ key, label, desc }) => (
-              <label key={key} className="flex items-center justify-between p-3 bg-white/3 rounded-lg cursor-pointer hover:bg-white/5 transition-colors">
-                <div>
-                  <div className="text-sm text-white">{label}</div>
-                  <div className="text-xs text-gray-500 mt-0.5">{desc}</div>
-                </div>
-                <div className="relative ml-4">
-                  <input type="checkbox" className="sr-only" checked={prefs[key]} onChange={setPref(key)} />
-                  <div className={`w-10 h-5 rounded-full transition-colors ${prefs[key] ? 'bg-blue-600' : 'bg-gray-600'}`}>
-                    <div className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform ${prefs[key] ? 'translate-x-5' : 'translate-x-0.5'}`} />
-                  </div>
-                </div>
-              </label>
-            ))}
+        <div className="p-6 rounded-2xl bg-[#070b18]/90 border border-white/5 space-y-4">
+          <h3 className="font-semibold text-white text-sm">Notification Channels</h3>
+          <div className="space-y-2 text-xs text-gray-300">
+            <div>Real-time SOC alerts dispatched to BEL command dashboard.</div>
           </div>
-
-          <button onClick={handleSave} className="btn-primary w-full justify-center">
-            {saved ? <><CheckCircle size={15} />Saved!</> : <><Save size={15} />Save Preferences</>}
-          </button>
         </div>
       )}
 
+      {/* System Tab */}
       {tab === 'system' && (
-        <div className="space-y-4">
-          <div className="glass-card p-5">
-            <h3 className="font-semibold text-white mb-4">System Information</h3>
-            <div className="space-y-2">
-              {[
-                { label: 'Platform', value: 'Nexus Ledger v1.0' },
-                { label: 'Mode', value: 'DEMO MODE (No live backend)' },
-                { label: 'Blockchain', value: 'DEMO BLOCKCHAIN (No MetaMask)' },
-                { label: 'Frontend', value: 'React 18 + Vite 5 + Tailwind CSS 3' },
-                { label: 'SIH Problem', value: 'PS 26125 — Bharat Electronics Limited' },
-                { label: 'Theme', value: 'Blockchain & Cybersecurity' },
-              ].map(({ label, value }) => (
-                <div key={label} className="flex items-center justify-between py-2 border-b border-white/5 text-sm">
-                  <span className="text-gray-500">{label}</span>
-                  <span className="text-gray-200">{value}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="glass-card p-5 bg-yellow-500/5 border-yellow-500/15">
-            <div className="flex items-start gap-3">
-              <Info size={16} className="text-yellow-400 mt-0.5 flex-shrink-0" />
-              <div className="text-xs text-gray-400 leading-relaxed">
-                <strong className="text-yellow-300">Demo Mode Active:</strong> All data shown is simulated.
-                To connect a real MySQL database, edit <code className="text-blue-300">backend/config.php</code> with your database credentials.
-                To connect real blockchain, install MetaMask and configure the network in <code className="text-blue-300">src/lib/blockchain.js</code>.
-              </div>
-            </div>
-          </div>
-
-          <div className="glass-card p-5">
-            <h3 className="font-semibold text-white mb-3">Demo Credentials</h3>
-            <div className="space-y-2">
-              {[
-                { role: 'Super Admin', email: 'admin@nexusledger.demo', password: 'Admin@123' },
-                { role: 'User', email: 'user@nexusledger.demo', password: 'User@123' },
-                { role: 'Auditor', email: 'auditor@nexusledger.demo', password: 'Audit@123' },
-              ].map(c => (
-                <div key={c.role} className="p-3 bg-white/3 rounded-lg border border-white/5 text-xs font-mono flex items-center justify-between">
-                  <div>
-                    <span className="text-blue-400 font-semibold mr-2">{c.role}</span>
-                    <span className="text-gray-400">{c.email}</span>
-                  </div>
-                  <span className="text-gray-500">{c.password}</span>
-                </div>
-              ))}
-            </div>
+        <div className="p-6 rounded-2xl bg-[#070b18]/90 border border-white/5 space-y-3">
+          <h3 className="font-semibold text-white text-sm">Platform Build & Engine</h3>
+          <div className="text-xs text-gray-400 space-y-1">
+            <div>Engine: NEXUS 3D Trust Core v2.0</div>
+            <div>Three.js + React Three Fiber + Drei</div>
+            <div>Target: BEL PS 26125 Enterprise Mandate</div>
           </div>
         </div>
       )}

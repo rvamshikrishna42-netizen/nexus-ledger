@@ -4,6 +4,7 @@ import {
   ChevronDown, ChevronUp
 } from 'lucide-react'
 import { DEMO_CERTIFICATES } from '../data/demoData'
+import { useTrustCore } from '../context/TrustCoreContext'
 
 // Lightweight rule-based risk engine
 function analyzeRisk(cert) {
@@ -211,6 +212,7 @@ function ResultCard({ status, score, cert, checks, reasons, isTampered }) {
 }
 
 export default function Certificates() {
+  const { triggerVerification } = useTrustCore()
   const [certId, setCertId] = useState('')
   const [result, setResult] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -223,9 +225,10 @@ export default function Certificates() {
       setResult({ notFound: true }); return
     }
     setLoading(true)
+    const isTampered = cert.status === 'Tampered'
+    triggerVerification(!isTampered, cert.hash)
     await new Promise(r => setTimeout(r, 1000))
     const { score, reasons } = analyzeRisk(cert)
-    const isTampered = cert.status === 'Tampered'
     const checks = runChecks(cert, isTampered)
     setResult({ cert, score, reasons, checks, isTampered })
     setLoading(false)
@@ -235,8 +238,9 @@ export default function Certificates() {
     setTamperDemo(mode)
     const cert = { ...TAMPER_PAIRS[mode], riskScore: mode === 'tampered' ? 92 : 8 }
     setLoading(true)
-    await new Promise(r => setTimeout(r, 900))
     const isTampered = mode === 'tampered'
+    triggerVerification(!isTampered, cert.hash)
+    await new Promise(r => setTimeout(r, 900))
     const { score, reasons } = analyzeRisk({ ...cert, status: isTampered ? 'Tampered' : 'Verified' })
     const checks = runChecks(cert, isTampered)
     setResult({ cert, score, reasons, checks, isTampered, status: isTampered ? 'Tampered' : 'Verified' })

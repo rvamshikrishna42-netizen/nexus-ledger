@@ -521,14 +521,15 @@ export const RBAC_MATRIX = {
 }
 
 export const DASHBOARD_STATS = {
-  totalIdentities: 5,
-  digitalAssets: 5,
-  verifiedCertificates: 3,
-  suspiciousCertificates: 2,
-  trustedDevices: 3,
-  securityEvents: 10,
-  blockchainTransactions: 7,
-  securityScore: 92,
+  totalIdentities: '1,248',
+  digitalAssets: '3,542',
+  verifiedCertificates: '2,891',
+  suspiciousCertificates: '2',
+  trustedDevices: '874',
+  aiAlerts: '23',
+  securityEvents: '23',
+  blockchainTransactions: '18,951',
+  securityScore: 82,
 }
 
 export const CHART_DATA = {
