@@ -17,6 +17,7 @@ import {
 } from '../data/demoData'
 import StatusBadge from '../components/StatusBadge'
 import RiskBadge from '../components/RiskBadge'
+import TrustCoreCanvas from '../components/trust-core/TrustCoreCanvas'
 
 const TOOLTIP_STYLE = {
   contentStyle: {
@@ -394,6 +395,77 @@ export default function Dashboard() {
               </div>
             ))}
           </div>
+        </div>
+      </div>
+
+      {/* =====================================================
+          NEXUS TRUST CORE — 3D Security Intelligence Core
+      ===================================================== */}
+      <div className="rounded-2xl border border-white/10 bg-[#070b18]/90 overflow-hidden">
+
+        {/* Section Header */}
+        <div className="px-6 py-5 border-b border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+              <span className="text-[10px] font-mono font-semibold text-cyan-400 uppercase tracking-widest">
+                NEXUS TRUST CORE
+              </span>
+            </div>
+            <h2 className="text-lg font-black text-white tracking-tight">
+              3D Security Intelligence Core
+            </h2>
+            <p className="text-xs text-gray-400 font-mono mt-1 max-w-2xl leading-relaxed">
+              Real-time visualization of the NEXUS security mesh — identity nodes, access
+              control, digital assets, AI threat detection, blockchain ledger integrity, and
+              immutable audit anchors, all interconnected in a live cryptographic trust graph.
+            </p>
+          </div>
+
+          <div className="flex items-center gap-2 text-[10px] font-mono shrink-0">
+            <span className="px-2.5 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 uppercase tracking-wider">
+              ● LIVE
+            </span>
+            <span className="px-2.5 py-1 rounded-lg bg-blue-500/10 border border-blue-500/25 text-blue-400 uppercase tracking-wider">
+              WebGL
+            </span>
+          </div>
+        </div>
+
+        {/* 3D Canvas */}
+        <div className="relative w-full" style={{ height: 'clamp(420px, 55vw, 620px)' }}>
+          <TrustCoreCanvas />
+        </div>
+
+        {/* Footer strip */}
+        <div className="px-6 py-3 border-t border-white/5 flex flex-wrap items-center gap-4 text-[10px] font-mono text-gray-500">
+          <span className="flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+            IDENTITY NODES
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+            ACCESS CONTROL
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
+            DIGITAL ASSETS
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
+            AI SECURITY
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+            BLOCKCHAIN
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            AUDIT LEDGER
+          </span>
+          <span className="ml-auto text-gray-600 uppercase tracking-wider">
+            INTERACTIVE — DRAG TO ROTATE
+          </span>
         </div>
       </div>
     </div>

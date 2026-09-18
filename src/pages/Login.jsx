@@ -5,16 +5,10 @@ import {
   Eye,
   EyeOff,
   Fingerprint,
-  ShieldCheck,
   LockKeyhole,
-  Cpu,
-  Blocks,
   AlertTriangle,
-  Activity,
-  ScanLine
 } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
-import TrustCoreCanvas from '../components/trust-core/TrustCoreCanvas'
 
 export default function Login() {
   const navigate = useNavigate()
@@ -102,106 +96,6 @@ export default function Login() {
       ===================================================== */}
 
       <section className="auth-3d-main">
-
-        {/* ===================================================
-            LEFT 3D TRUST CORE
-        =================================================== */}
-
-        <div className="auth-3d-visual">
-
-          <div className="visual-header">
-            <div>
-              <span>IDENTITY AUTHENTICATION</span>
-              <strong>NEXUS TRUST CORE</strong>
-            </div>
-
-            <div className="visual-live">
-              <Activity size={13} />
-              LIVE
-            </div>
-          </div>
-
-          <div className="auth-core-stage">
-
-            <div className="core-hud hud-top">
-              <ScanLine size={13} />
-              ENCRYPTED CHANNEL
-            </div>
-
-            <div className="core-hud hud-left">
-              <span>IDENTITY</span>
-              <strong>VERIFIED</strong>
-            </div>
-
-            <div className="core-hud hud-right">
-              <span>THREAT LEVEL</span>
-              <strong>LOW</strong>
-            </div>
-
-            <div className="core-hud hud-bottom">
-              <span>TRUST SCORE</span>
-              <strong>98.7%</strong>
-            </div>
-
-            {/* Existing Three.js Trust Core */}
-            <div className="auth-trust-canvas">
-              <TrustCoreCanvas inHero={true} />
-            </div>
-
-            {/* Additional depth rings */}
-            <div className="auth-orbit orbit-a" />
-            <div className="auth-orbit orbit-b" />
-            <div className="auth-orbit orbit-c" />
-
-          </div>
-
-          {/* Security modules */}
-
-          <div className="auth-module-grid">
-
-            <div className="auth-module">
-              <div className="module-icon">
-                <Fingerprint size={16} />
-              </div>
-              <div>
-                <small>DIGITAL IDENTITY</small>
-                <strong>VERIFIED</strong>
-              </div>
-            </div>
-
-            <div className="auth-module">
-              <div className="module-icon">
-                <LockKeyhole size={16} />
-              </div>
-              <div>
-                <small>ACCESS CONTROL</small>
-                <strong>RBAC ACTIVE</strong>
-              </div>
-            </div>
-
-            <div className="auth-module">
-              <div className="module-icon">
-                <Cpu size={16} />
-              </div>
-              <div>
-                <small>AI SECURITY</small>
-                <strong>MONITORING</strong>
-              </div>
-            </div>
-
-            <div className="auth-module">
-              <div className="module-icon">
-                <Blocks size={16} />
-              </div>
-              <div>
-                <small>BLOCKCHAIN</small>
-                <strong>CONNECTED</strong>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
 
         {/* ===================================================
             LOGIN PANEL
