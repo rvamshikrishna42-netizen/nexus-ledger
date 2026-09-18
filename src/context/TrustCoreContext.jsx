@@ -125,6 +125,12 @@ export function TrustCoreProvider({ children }) {
   const [autoRotate, setAutoRotate] = useState(true)
   const [particleDensity, setParticleDensity] = useState('medium') // 'low' | 'medium' | 'high'
 
+  // Emergency Lockdown state
+  // 'inactive' | 'activating' | 'active' | 'deactivating'
+  const [lockdownStatus, setLockdownStatus] = useState('inactive')
+  const [lockdownActivatedBy, setLockdownActivatedBy] = useState(null)
+  const [lockdownActivatedAt, setLockdownActivatedAt] = useState(null)
+
   // Map current route to 3D module
   useEffect(() => {
     const path = location.pathname
@@ -197,6 +203,29 @@ export function TrustCoreProvider({ children }) {
     setUnknownDeviceDetected(prev => !prev)
   }, [])
 
+  // Activate emergency lockdown (caller must verify role before calling)
+  const activateLockdown = useCallback((user) => {
+    setLockdownStatus('activating')
+    setLockdownActivatedBy(user?.name || 'Admin')
+    setLockdownActivatedAt(new Date().toISOString())
+    setTimeout(() => {
+      setLockdownStatus('active')
+      setThreatLevel('critical')
+      setRiskScore(prev => Math.max(prev, 82))
+      setAnomaliesToday(prev => prev + 1)
+    }, 1200)
+  }, [])
+
+  // Deactivate emergency lockdown (caller must verify role before calling)
+  const deactivateLockdown = useCallback(() => {
+    setLockdownStatus('deactivating')
+    setTimeout(() => {
+      setLockdownStatus('inactive')
+      setLockdownActivatedBy(null)
+      setLockdownActivatedAt(null)
+    }, 900)
+  }, [])
+
   const currentPreset = MODULE_PRESETS[activeModule] || MODULE_PRESETS.overview
 
   const value = {
@@ -226,6 +255,11 @@ export function TrustCoreProvider({ children }) {
     setAutoRotate,
     particleDensity,
     setParticleDensity,
+    lockdownStatus,
+    lockdownActivatedBy,
+    lockdownActivatedAt,
+    activateLockdown,
+    deactivateLockdown,
   }
 
   return (

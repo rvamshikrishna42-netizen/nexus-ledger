@@ -1,16 +1,18 @@
 import React, { useState } from 'react'
 import {
-  ClipboardList, Search, Download, ShieldCheck, Filter, Clock, Hash, Fingerprint, Plus
+  ClipboardList, Search, Download, ShieldCheck, Filter, Clock, Hash, Fingerprint, Plus, Award
 } from 'lucide-react'
 import { DEMO_AUDIT_LOGS } from '../data/demoData'
 import StatusBadge from '../components/StatusBadge'
 import { useTrustCore } from '../context/TrustCoreContext'
+import ComplianceCertificate from '../components/ComplianceCertificate'
 
 export default function Audit() {
   const { activeModule, setActiveModule } = useTrustCore()
   const [logs, setLogs] = useState(DEMO_AUDIT_LOGS)
   const [search, setSearch] = useState('')
   const [filterStatus, setFilterStatus] = useState('All')
+  const [showCertificate, setShowCertificate] = useState(false)
 
   // Generate DID for each log based on user
   const getDid = (user) => {
@@ -50,11 +52,22 @@ export default function Audit() {
         </div>
 
         <div className="flex items-center gap-2">
+          <button
+            onClick={() => setShowCertificate(true)}
+            className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-cyan-600/15 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-600/25 transition-all text-xs font-semibold"
+          >
+            <Award size={13} />
+            GENERATE COMPLIANCE CERTIFICATE
+          </button>
           <span className="text-[10px] text-emerald-400 border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 rounded-full flex items-center gap-1.5">
             <ShieldCheck size={13} />
             IMMUTABLE LEDGER SEALED
           </span>
         </div>
+
+        {showCertificate && (
+          <ComplianceCertificate onClose={() => setShowCertificate(false)} />
+        )}
       </div>
 
       {/* Filter Bar */}

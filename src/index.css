@@ -2674,7 +2674,7 @@ button:focus-visible {
   align-items: center;
   gap: 10px;
 
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 800;
   letter-spacing: .7px;
 }
@@ -2756,7 +2756,7 @@ button:focus-visible {
 
   background: rgba(255,255,255,.035);
 
-  font-size: 10px;
+  font-size: 11px;
 
   transition: .25s ease;
 }
@@ -2776,12 +2776,9 @@ button:focus-visible {
 
   min-height: calc(100vh - 72px);
 
-  display: grid;
-  grid-template-columns: 1.15fr .85fr;
-
+  display: flex;
   align-items: center;
-
-  gap: 20px;
+  justify-content: center;
 
   padding: 25px 5vw 40px;
 }
@@ -3240,7 +3237,7 @@ button:focus-visible {
 .auth-card-kicker {
   color: #55d7ff;
 
-  font-size: 8px;
+  font-size: 9px;
   font-weight: 700;
 
   letter-spacing: 1.3px;
@@ -3251,7 +3248,7 @@ button:focus-visible {
 
   color: #f5f8ff;
 
-  font-size: 27px;
+  font-size: 29px;
   font-weight: 600;
 
   letter-spacing: -1px;
@@ -3262,7 +3259,7 @@ button:focus-visible {
 
   color: #75869c;
 
-  font-size: 11px;
+  font-size: 12px;
 }
 
 /* ERROR */
@@ -3282,7 +3279,7 @@ button:focus-visible {
 
   color: #fca5a5;
 
-  font-size: 10px;
+  font-size: 11px;
 }
 
 /* FIELDS */
@@ -3294,7 +3291,7 @@ button:focus-visible {
 
   color: #74879e;
 
-  font-size: 8px;
+  font-size: 9px;
   font-weight: 700;
 
   letter-spacing: 1px;
@@ -3349,7 +3346,7 @@ button:focus-visible {
 
   color: #e8f1fb;
 
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .auth-3d-input input::placeholder {
@@ -3398,7 +3395,7 @@ button:focus-visible {
 
   color: #596b80;
 
-  font-size: 8px;
+  font-size: 9px;
   font-family: monospace;
 }
 
@@ -3446,7 +3443,7 @@ button:focus-visible {
       #b9edff
     );
 
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 800;
 
   letter-spacing: .9px;
@@ -3526,7 +3523,7 @@ button:focus-visible {
 
   color: #4d6077;
 
-  font-size: 7px;
+  font-size: 8px;
   letter-spacing: 1px;
 }
 
@@ -3581,7 +3578,7 @@ button:focus-visible {
 .auth-demo-grid strong {
   color: #b9c9da;
 
-  font-size: 7px;
+  font-size: 8px;
   letter-spacing: .5px;
 }
 
@@ -3590,7 +3587,7 @@ button:focus-visible {
 
   color: #4f637a;
 
-  font-size: 6px;
+  font-size: 7px;
 
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -3608,7 +3605,7 @@ button:focus-visible {
 
   color: #667990;
 
-  font-size: 9px;
+  font-size: 10px;
 }
 
 .auth-create a {
@@ -3640,7 +3637,7 @@ button:focus-visible {
 
   font-family: monospace;
 
-  font-size: 6px;
+  font-size: 7px;
   letter-spacing: .7px;
 }
 
@@ -3666,14 +3663,6 @@ button:focus-visible {
    ========================================================= */
 
 @media (max-width: 1100px) {
-
-  .auth-3d-main {
-    grid-template-columns: 1fr;
-  }
-
-  .auth-3d-visual {
-    height: 560px;
-  }
 
   .auth-3d-form-area {
     padding-bottom: 40px;
@@ -3877,7 +3866,7 @@ button:focus-visible {
   color: #fff;
   border: 1px solid rgba(37, 99, 235, 0.5);
   border-radius: 8px;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   font-family: inherit;
   cursor: pointer;
@@ -3904,7 +3893,7 @@ button:focus-visible {
   color: #d1d5db;
   border: 1px solid rgba(255, 255, 255, 0.10);
   border-radius: 8px;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   font-family: inherit;
   cursor: pointer;
@@ -3920,7 +3909,7 @@ button:focus-visible {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   color: #e5e7eb;
   text-transform: uppercase;
@@ -3929,7 +3918,7 @@ button:focus-visible {
 
 /* ---- Table Utilities ---- */
 .table-header {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   color: #6b7280;
   text-transform: uppercase;
@@ -3938,7 +3927,7 @@ button:focus-visible {
 
 .table-cell {
   padding: 10px 16px;
-  font-size: 13px;
+  font-size: 14px;
   color: #d1d5db;
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }
@@ -3950,7 +3939,7 @@ button:focus-visible {
   border: 1px solid rgba(255, 255, 255, 0.10);
   border-radius: 8px;
   padding: 8px 12px;
-  font-size: 13px;
+  font-size: 14px;
   color: #f3f4f6;
   font-family: inherit;
   outline: none;
@@ -3976,7 +3965,7 @@ button:focus-visible {
   color: #34d399;
   border: 1px solid rgba(16, 185, 129, 0.25);
   border-radius: 999px;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.04em;
 }
@@ -3990,7 +3979,7 @@ button:focus-visible {
   color: #fbbf24;
   border: 1px solid rgba(245, 158, 11, 0.25);
   border-radius: 999px;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.04em;
 }
@@ -4004,7 +3993,7 @@ button:focus-visible {
   color: #f87171;
   border: 1px solid rgba(239, 68, 68, 0.25);
   border-radius: 999px;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.04em;
 }
@@ -4018,7 +4007,7 @@ button:focus-visible {
   color: #93c5fd;
   border: 1px solid rgba(59, 130, 246, 0.25);
   border-radius: 999px;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.04em;
 }
@@ -4032,7 +4021,7 @@ button:focus-visible {
   color: #9ca3af;
   border: 1px solid rgba(107, 114, 128, 0.20);
   border-radius: 999px;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.04em;
 }
@@ -4063,7 +4052,7 @@ button:focus-visible {
   color: #c4b5fd;
   border: 1px solid rgba(139, 92, 246, 0.25);
   border-radius: 999px;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.04em;
 }
@@ -4078,7 +4067,7 @@ button:focus-visible {
   color: #fbbf24;
   border: 1px solid rgba(245, 158, 11, 0.25);
   border-radius: 6px;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
   font-family: monospace;
   letter-spacing: 0.02em;

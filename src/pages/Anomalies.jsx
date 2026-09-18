@@ -7,6 +7,7 @@ import { DEMO_ANOMALIES } from '../data/demoData'
 import RiskBadge from '../components/RiskBadge'
 import StatusBadge from '../components/StatusBadge'
 import { useTrustCore } from '../context/TrustCoreContext'
+import ExplainableSecurityAlert from '../components/ExplainableSecurityAlert'
 
 const RULES = [
   { id: 'BRUTE_FORCE_DETECTED', label: 'Brute Force Detection', desc: 'Triggers when >10 failed logins in 5 minutes from same IP', color: 'red' },
@@ -18,9 +19,14 @@ const RULES = [
 ]
 
 export default function Anomalies() {
-  const { threatLevel, riskScore, simulateThreat, resetThreat } = useTrustCore()
+  const { threatLevel, riskScore, simulateThreat, resetThreat, unknownDeviceDetected, lockdownStatus } = useTrustCore()
   const [anomalies, setAnomalies] = useState(DEMO_ANOMALIES)
   const [filter, setFilter] = useState('All')
+
+  // Highest-scoring unresolved anomaly for explainable alert panel
+  const topAnomaly = [...anomalies]
+    .filter(a => !a.resolved)
+    .sort((a, b) => b.score - a.score)[0] ?? null
 
   return (
     <div className="space-y-6 font-mono">
@@ -82,6 +88,18 @@ export default function Anomalies() {
           </div>
         </div>
       </div>
+
+      {/* Explainable AI Alert — top unresolved anomaly */}
+      {topAnomaly && (
+        <ExplainableSecurityAlert
+          title={topAnomaly.type.toUpperCase()}
+          riskScore={riskScore}
+          threatLevel={threatLevel}
+          unknownDeviceDetected={unknownDeviceDetected}
+          anomaly={topAnomaly}
+          lockdownStatus={lockdownStatus}
+        />
+      )}
 
       {/* Anomaly Detection Rules */}
       <div>
